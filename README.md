@@ -91,6 +91,57 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
+## Testing
+
+Our project includes a comprehensive suite of tests to ensure the reliability and correctness of the backend API. We have implemented unit, integration, and API tests to cover different aspects of the application.
+
+### Tech Stack for Testing
+
+- **[Jest](https://jestjs.io/):** A delightful JavaScript Testing Framework with a focus on simplicity. We use it as our primary test runner and assertion library.
+- **[Supertest](https://github.com/visionmedia/supertest):** Used for testing HTTP assertions, allowing us to test our API endpoints in a way that resembles how they are used in production.
+- **[MongoDB Memory Server](https://github.com/nodkz/mongodb-memory-server):** This library spins up an in-memory MongoDB instance, allowing us to run tests against a real MongoDB database without connecting to an external server. This is great for integration testing our database logic.
+
+### Types of Tests
+
+-   **Unit Tests:** These tests focus on individual components (e.g., controller functions) in isolation. While we use an in-memory database, which leans towards integration testing, the tests in `backend/tests/taskController.test.js` verify the logic within the controllers.
+-   **Integration Tests:** Our tests ensure that the API server and the database work together as expected. By using `mongodb-memory-server`, we test the full CRUD operations from the controller to a database instance.
+-   **API Tests:** Located in `backend/tests/tasks.test.js`, these tests use `supertest` to make live HTTP requests to our API endpoints. They verify that the API behaves correctly, checking status codes, response bodies, and headers for all defined routes.
+
+### How to Run Tests
+
+To run the tests for the backend, navigate to the `backend` directory and execute:
+
+```sh
+npm test
+```
+
+This command will run all test files and generate a coverage report in the terminal.
+
+### Test Coverage
+
+We have achieved **100% test coverage** for the backend modules exercised by our tests. The coverage report below shows the breakdown for our controllers, models, and routes.
+
+*Note: The main server entrypoint (`index.js`) and database configuration (`config/db.js`) are not included in this report as they are bypassed in our test environment in favor of an in-memory server and database.*
+
+![Test Coverage](public/backendtest.png)
+
+```text
+---------------------|---------|----------|---------|---------|-------------------
+File                 | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+---------------------|---------|----------|---------|---------|-------------------
+All files            |     100 |      100 |     100 |     100 |                   
+server.js            |     100 |      100 |     100 |     100 |                   
+controllers          |     100 |      100 |     100 |     100 |                   
+taskController.js    |     100 |      100 |     100 |     100 |                   
+models               |     100 |      100 |     100 |     100 |                   
+Task.js              |     100 |      100 |     100 |     100 |                   
+routes               |     100 |      100 |     100 |     100 |                   
+taskRoutes.js        |     100 |      100 |     100 |     100 |                   
+---------------------|---------|----------|---------|---------|-------------------
+```
+
+---
+
 ## Database
 
 - Uses MongoDB
