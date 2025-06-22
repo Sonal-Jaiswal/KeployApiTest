@@ -109,13 +109,25 @@ Our project includes a comprehensive suite of tests to ensure the reliability an
 
 ### How to Run Tests
 
-To run the tests for the backend, navigate to the `backend` directory and execute:
+You can run all tests at once or target specific test suites. From the `backend` directory, use the following commands:
 
+#### Run All Tests
+This command executes the entire test suite and generates a coverage report.
 ```sh
 npm test
 ```
 
-This command will run all test files and generate a coverage report in the terminal.
+#### Run Unit Tests
+These tests focus on individual controller functions.
+```sh
+npm test -- tests/taskController.test.js
+```
+
+#### Run API & Integration Tests
+These tests check the API endpoints and their integration with the database.
+```sh
+npm test -- tests/tasks.test.js
+```
 
 ### Test Coverage
 
