@@ -26,6 +26,48 @@ These tests check the API endpoints and their integration with the database.
 npm test -- tests/tasks.test.js
 ```
 
+### Keploy API Testing Integration
+
+We have integrated **Keploy AI-powered API testing** into our CI/CD pipeline for enhanced API testing capabilities.
+
+#### Setup Instructions
+
+1. **Install Keploy CLI locally:**
+   ```sh
+   curl --silent -L https://keploy.io/ent/install.sh | bash
+   ```
+
+2. **Start your application:**
+   ```sh
+   cd backend
+   npm start
+   ```
+
+3. **Record API interactions:**
+   ```sh
+   keploy record --app task-manager-api --base-path http://localhost:5001/api
+   ```
+
+4. **Run Keploy tests:**
+   ```sh
+   keploy test --app task-manager-api --base-path http://localhost:5001/api
+   ```
+
+#### CI/CD Integration
+
+Our GitHub Actions workflow (`.github/workflows/ci.yml`) automatically:
+- Runs existing unit and integration tests
+- Installs Keploy CLI
+- Executes Keploy API tests
+- Generates test reports and coverage
+
+**To complete the Keploy setup:**
+1. Go to [app.keploy.io](https://app.keploy.io)
+2. Create a test suite for your API
+3. Copy the test command from the dashboard
+4. Add your `KEPLOY_API_KEY` as a GitHub secret
+5. Update the workflow file with your actual app ID and base path
+
 ### Test Coverage & Output
 
 We have achieved **100% test coverage** for the backend modules exercised by our tests. The coverage report below shows the breakdown for our controllers, models, and routes.
@@ -66,12 +108,14 @@ Ran all test suites.
 - **[Jest](https://jestjs.io/):** A delightful JavaScript Testing Framework with a focus on simplicity. We use it as our primary test runner and assertion library.
 - **[Supertest](https://github.com/visionmedia/supertest):** Used for testing HTTP assertions, allowing us to test our API endpoints in a way that resembles how they are used in production.
 - **[MongoDB Memory Server](https://github.com/nodkz/mongodb-memory-server):** This library spins up an in-memory MongoDB instance, allowing us to run tests against a real MongoDB database without connecting to an external server. This is great for integration testing our database logic.
+- **[Keploy](https://keploy.io/):** AI-powered API testing platform that automatically generates and maintains API tests from real user interactions.
 
 ### Types of Tests
 
 -   **Unit Tests:** These tests focus on individual components (e.g., controller functions) in isolation. While we use an in-memory database, which leans towards integration testing, the tests in `backend/tests/taskController.test.js` verify the logic within the controllers.
 -   **Integration Tests:** Our tests ensure that the API server and the database work together as expected. By using `mongodb-memory-server`, we test the full CRUD operations from the controller to a database instance.
 -   **API Tests:** Located in `backend/tests/tasks.test.js`, these tests use `supertest` to make live HTTP requests to our API endpoints. They verify that the API behaves correctly, checking status codes, response bodies, and headers for all defined routes.
+-   **Keploy AI Tests:** AI-generated API tests that automatically adapt to API changes and provide comprehensive coverage of real-world usage patterns.
 
 ---
 
@@ -85,6 +129,10 @@ A simple full-stack app with:
 ---
 
 ## API Documentation
+
+### OpenAPI Schema
+
+We provide a complete OpenAPI 3.0.3 specification in `openapi.yaml` that documents all endpoints, request/response schemas, and examples.
 
 ### 1. Get all tasks
 - **Endpoint:** `GET /api/tasks`

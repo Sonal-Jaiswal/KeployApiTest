@@ -1,0 +1,46 @@
+# Keploy Configuration for Task Manager API
+app: task-manager-api
+version: 1.0.0
+
+# API Configuration
+api:
+  base_url: http://localhost:5001
+  endpoints:
+    - path: /api/tasks
+      method: GET
+      description: "Get all tasks"
+    - path: /api/tasks
+      method: POST
+      description: "Create a new task"
+    - path: /api/tasks/{id}
+      method: PUT
+      description: "Update a task"
+    - path: /api/tasks/{id}
+      method: DELETE
+      description: "Delete a task"
+
+# Test Configuration
+tests:
+  timeout: 30s
+  retries: 3
+  
+# Recording Configuration
+recording:
+  enabled: true
+  filters:
+    - "health"
+    - "metrics"
+  
+# Testing Configuration
+testing:
+  mode: "api"
+  coverage:
+    enabled: true
+    threshold: 80
+
+# CI/CD Integration
+ci:
+  enabled: true
+  artifacts:
+    - "coverage/"
+    - "test-results/" 
