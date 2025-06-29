@@ -43,17 +43,10 @@ jobs:
         npm start &
         sleep 10  # Wait for the server to start
     
-    - name: Run Keploy API Tests
+    - name: Run Keploy Test Suite
       run: |
         export KEPLOY_API_KEY=${{ secrets.KEPLOY_API_KEY }}
-        # Note: Replace the app ID and base path with your actual values from Keploy Dashboard
-        # keploy test-suite --app=YOUR_APP_ID --base-path http://localhost:5001/api --cloud
-        echo "Keploy API testing would run here with proper app ID and base path"
-        echo "To complete setup:"
-        echo "1. Go to app.keploy.io"
-        echo "2. Create test suite for your API"
-        echo "3. Copy the test command from dashboard"
-        echo "4. Replace the commented command above with your actual values"
+        keploy test-suite --app=3a3b5eb0-d200-4a42-bb4f-fbb6f2d2d10f --base-path https://keploytaskmanageapi.onrender.com/api/tasks/ --cloud
     
     - name: Upload test results
       uses: actions/upload-artifact@v4
